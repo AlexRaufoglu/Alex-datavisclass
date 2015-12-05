@@ -9,7 +9,11 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 <meta charset="utf-8" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="bower_components/squared/dist/squared.js"></script>
+  
 	<!-- 	comment -->
+
+
 <style>
 @media only screen and (min-width : 320px) and (max-width : 763px) 
 {.desktop { 
@@ -39,6 +43,26 @@ display: none;
 }
 
 
+.squared-geog {
+    background-color: #FDC26D;
+}
+.squared-geog.small {
+    background-color: red;
+    color: white;
+    font-family: 'Lato', sans-serif;
+}
+.squared-geog.medium {
+    background-color: green;
+    color: white;
+    font-family: 'Lato', sans-serif;
+}
+.squared-geog.large {
+    background-color: blue;
+    color: white;
+    font-family: 'Lato', sans-serif;
+}
+  
+  
 </style>
 </head>
 
@@ -227,6 +251,80 @@ d3.csv("data.csv", function(error, data) {
 </script>
 
 <!-- comment -->
+
+
+<body>
+<h1>States with more than million women employed</h1>
+<div id="map" style="width: 600px; height: 400px"></div>
+</body>
+  
+<script>
+var mydata = 
+[{"Full_name":"Alabama","name":"AL","Male16to64":1525643},
+{"Full_name":"Alaska","name":"AK","Male16to64":266176},
+{"Full_name":"Arizona","name":"AZ","Male16to64":2116953},
+{"Full_name":"Arkansas","name":"AR","Male16to64":930275},
+{"Full_name":"California","name":"CA","Male16to64":12924983},
+{"Full_name":"Colorado","name":"CO","Male16to64":1808502},
+{"Full_name":"Connecticut","name":"CT","Male16to64":1169201},
+{"Full_name":"Delaware","name":"DE","Male16to64":292330},
+{"Full_name":"Florida","name":"FL","Male16to64":6186072},
+{"Full_name":"Georgia","name":"GA","Male16to64":3249033},
+{"Full_name":"Hawaii","name":"HI","Male16to64":474011},
+{"Full_name":"Idaho","name":"ID","Male16to64":509295},
+{"Full_name":"Illinois","name":"IL","Male16to64":4204225},
+{"Full_name":"Indiana","name":"IN","Male16to64":2115317},
+{"Full_name":"Iowa","name":"IA","Male16to64":998365},
+{"Full_name":"Kansas","name":"KS","Male16to64":931707},
+{"Full_name":"Kentucky","name":"KY","Male16to64":1424354},
+{"Full_name":"Louisiana","name":"LA","Male16to64":1491354},
+{"Full_name":"Maine","name":"ME","Male16to64":422914},
+{"Full_name":"Maryland","name":"MD","Male16to64":1927410},
+{"Full_name":"Massachusetts","name":"MA","Male16to64":2209607},
+{"Full_name":"Michigan","name":"MI","Male16to64":3192573},
+{"Full_name":"Minnesota","name":"MN","Male16to64":1784720},
+{"Full_name":"Mississippi","name":"MS","Male16to64":935961},
+{"Full_name":"Missouri","name":"MO","Male16to64":1929954},
+{"Full_name":"Montana","name":"MT","Male16to64":329514},
+{"Full_name":"Nebraska","name":"NE","Male16to64":601283},
+{"Full_name":"Nevada","name":"NV","Male16to64":936688},
+{"Full_name":"New Hampshire","name":"NH","Male16to64":441602},
+{"Full_name":"New Jersey","name":"NJ","Male16to64":2903312},
+{"Full_name":"New Mexico","name":"NM","Male16to64":661015},
+{"Full_name":"New York","name":"NY","Male16to64":6440810},
+{"Full_name":"North Carolina","name":"NC","Male16to64":3160714},
+{"Full_name":"North Dakota","name":"ND","Male16to64":253708},
+{"Full_name":"Ohio","name":"OH","Male16to64":3704752},
+{"Full_name":"Oklahoma","name":"OK","Male16to64":1236193},
+{"Full_name":"Oregon","name":"OR","Male16to64":1289640},
+{"Full_name":"Pennsylvania","name":"PA","Male16to64":4118985},
+{"Full_name":"Rhode Island","name":"RI","Male16to64":345044},
+{"Full_name":"South Carolina","name":"SC","Male16to64":1524242},
+{"Full_name":"South Dakota","name":"SD","Male16to64":273543},
+{"Full_name":"Tennessee","name":"TN","Male16to64":2081095},
+{"Full_name":"Texas","name":"TX","Male16to64":8765472},
+{"Full_name":"Utah","name":"UT","Male16to64":925968},
+{"Full_name":"Vermont","name":"VT","Male16to64":204144},
+{"Full_name":"Virginia","name":"VA","Male16to64":2741873},
+{"Full_name":"Washington","name":"WA","Male16to64":2350465},
+{"Full_name":"West Virginia","name":"WV","Male16to64":593448},
+{"Full_name":"Wisconsin","name":"WI","Male16to64":1877451},
+{"Full_name":"Wyoming","name":"WY","Male16to64":196875}];
+
+  map = new Squared("map");
+  map.make();
+ map.data(mydata, "name");
+    console.log(mydata);
+    map.addClass(function(d){
+      if(d.Male16to24 < 1000000)
+        return "small";
+       else if(d.Male16to64 < 1000000 )
+         return "medium";
+       else return "large";
+    });
+</script>
+<h4><u>Made by Alex Raufoglu:  Data source: U.S. Census</u></h4>
+
 
 <p style="color:red"><u>About me</u></p>
 <p>I'm a Washington-based journalist specializing in the Caucasus and wider Black Sea region. I cover the U.S. policies on South Caucasus, Eastern Europe, Turkey and the surrounding region. My coverage interests also include Eurasian democracy, rights, media and other freedoms, as well as peace and security.</p>

@@ -1,42 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<html>
-<body>
-
-<p><h1>Alex Raufoglu</h1></p>
-
-<p><img src="money1.png" alt ="Total spent by campaigns: 3rd Quarter" style="width:700px;height:300px;"></p>
-<p><img src="money4.png" style="width:700px;height:300px;"></p>
-<p><img src="money3.png" style="width:700px;height:300px;"></p>
-<p><img src="money2.png" style="width:700px;height:300px;"></p>
-
-<p>About me</p>  
-<img src="alex.jpg" alt="Alex"/>
-
-<p style="font-size: 16px"><b>I'm a Washington-based journalist specializing in the Caucasus and wider Black Sea region.</b></p>
-<p>Bio</p>
-<p style="color:red; font-size:16px">Since 2008, I've lived in Washington, DC, where I work as a journalist for several media outlets. I cover the U.S. policies on South Caucasus, Eastern Europe, Turkey and the surrounding region. My coverage interests also include Eurasian democracy, rights, media and other freedoms, as well as peace and security. My articles have appeared in the:</p>
-
-<ul style="list-style-type: square;">
-<li><a href="http://www.rferl.org">Radio Free Europe/Radio Liberty</a>,</li> 
-<li><a href="http://www.setimes.com">Southeastern European Times</a>,</li> 
-<li><a href="http://www.foreignpolicyjournal.com">Foreign Policy Magazine</a>, etc.</li>
-</ul>
-
-<p>From 1999 to 2008, I covered Eurasian politics and security from Ankara, Baku, and Tbilisi, such as the Rose Revolution in Georgia, the Orange Revolution in Ukraine, the Georgian-Russian war, and Turkish-Armenian rapprochement.</p>
-                
-<h3>Here are the topic that I cover:</h3>
-
-<ol>
-<li style="font-size: 16px">Politics</li>
-<li style="font-size: 16px">Human rights</li>
-<li style="font-size: 16px">International relations</li>
-</ol>    
-
-Contact me at <a href="mailto:ralakbar@gmail.com">ralakbar@gmail.com</a>.
-
-</body>
-</html>
 
 <head>
 <meta charset="utf-8">
@@ -58,6 +21,24 @@ display: none;
 { display: none; 
 }
 }
+
+#graph {
+  font: 10px sans-serif;
+}
+.axis path,
+.axis line {
+  fill: none;
+  stroke: brown;
+  shape-rendering: crispEdges;
+}
+
+.line {
+  fill: none;
+  stroke: red;
+  stroke-width: 1.5px;
+}
+
+
 </style>
 </head>
 
@@ -153,29 +134,98 @@ WriteNewsStory("JournalismCoders", "CODE", "Friday", 7, 900000, "Washington, D.C
 <div id="icons">
 </div>
 <script type="text/javascript">
-
 var bus = 22;
 var car = 14;
 var bicycle = 7;
-
 $('#icons').append("<h4><u>By bus</u></h4>");
 for(var i = 0; i < bus; i++)
 {
 $("#icons").append('<i class="fa fa-bus"></i>');
 }
-
 $("#icons").append('<h4><u>By car</u></h4>');
 for(var i = 0; i < car; i++)
 {
 $("#icons").append('<i class="fa fa-car"></i>');
 }
-
 $("#icons").append('<h4><u>By bicycle</u></h4>');
 for(var i = 0; i < bicycle; i++)
 {
 $("#icons").append('<i class="fa fa-bicycle"></i>');
 }
 </script>
+
+
+<h3><p style="color:red"><u>Class 5: Homework</u></p></h3>
+
+<h4>Unemployment Graph for the United States</h4>
+<div id="graph"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.10/d3.min.js"></script>
+
+<script>
+var margin = {top: 20, right: 20, bottom: 30, left: 50},
+    width = 760 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
+
+var parseDate = d3.time.format("%m/%d/%y").parse;
+
+var x = d3.time.scale()
+    .range([0, width]);
+
+var y = d3.scale.linear()
+    .range([height, 0]);
+
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom");
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left");
+
+var line = d3.svg.line()
+    .x(function(d) { return x(d.date); })
+    .y(function(d) { return y(d.close); });
+
+var svg = d3.select("#graph").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+d3.csv("data.csv", function(error, data) {
+  if (error) throw error;
+
+  data.forEach(function(d) {
+    d.date = parseDate(d.date);
+    d.close = +d.close;
+  });
+
+  x.domain(d3.extent(data, function(d) { return d.date; }));
+  y.domain(d3.extent(data, function(d) { return d.close; }));
+
+  svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis);
+
+  svg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+    .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text("Unemployment (%)");
+
+  svg.append("path")
+      .datum(data)
+      .attr("class", "line")
+      .attr("d", line);
+});
+</script>
+
 
 <p style="color:red"><u>About me</u></p>
 <p>I'm a Washington-based journalist specializing in the Caucasus and wider Black Sea region. I cover the U.S. policies on South Caucasus, Eastern Europe, Turkey and the surrounding region. My coverage interests also include Eurasian democracy, rights, media and other freedoms, as well as peace and security.</p>
